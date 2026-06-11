@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  point_price: 1
+  file_url: MyText
+  thumbnail_url: MyText
+  is_active: false
+
+two:
+  title: MyString
+  description: MyText
+  point_price: 1
+  file_url: MyText
+  thumbnail_url: MyText
+  is_active: false
