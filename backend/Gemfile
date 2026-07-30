@@ -4,6 +4,8 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.3"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
+# Allow switching to sqlite3 via the DB_ADAPTER env var (see config/database.yml)
+gem "sqlite3", ">= 2.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
@@ -36,6 +38,9 @@ gem "image_processing", "~> 1.2"
 # gem "rack-cors"
 
 group :development, :test do
+  # Loads DB_PASSWORD etc. from .env (see config/database.yml)
+  gem "dotenv-rails"
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
