@@ -4,3 +4,4 @@ class ApplicationController < ActionController::API
 
   append_view_path "#{Rails.root}/app/views"
 end
+
