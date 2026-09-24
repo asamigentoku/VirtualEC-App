@@ -3,9 +3,9 @@
 one:
   user: one
   product: one
-  point_used: 1
+  point_used: 100
 
 two:
   user: two
-  product: two
-  point_used: 1
+  product: one
+  point_used: 100

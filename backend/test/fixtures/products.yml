@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyText
-  point_price: 1
-  file_url: MyText
-  thumbnail_url: MyText
-  is_active: false
+  title: Fixture Product One
+  description: Test product one
+  point_price: 100
+  file_url: https://example.com/files/one.pdf
+  thumbnail_url: https://example.com/thumbs/one.png
+  is_active: true
 
 two:
-  title: MyString
-  description: MyText
-  point_price: 1
-  file_url: MyText
-  thumbnail_url: MyText
-  is_active: false
+  title: Fixture Product Two
+  description: Test product two
+  point_price: 200
+  file_url: https://example.com/files/two.pdf
+  thumbnail_url: https://example.com/thumbs/two.png
+  is_active: true

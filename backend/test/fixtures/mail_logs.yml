@@ -2,16 +2,16 @@
 
 one:
   purchase: one
-  mail_type: MyString
-  recipient_email: MyString
-  subject: MyString
-  status: MyString
+  mail_type: product_delivery
+  recipient_email: fixture_one@example.com
+  subject: Product delivery one
+  status: sent
   sent_at: 2026-06-11 21:51:26
 
 two:
   purchase: two
-  mail_type: MyString
-  recipient_email: MyString
-  subject: MyString
-  status: MyString
+  mail_type: product_delivery
+  recipient_email: fixture_two@example.com
+  subject: Product delivery two
+  status: pending
   sent_at: 2026-06-11 21:51:26

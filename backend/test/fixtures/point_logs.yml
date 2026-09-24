@@ -2,12 +2,12 @@
 
 one:
   user: one
-  type: 
-  point: 1
-  description: MyText
+  log_type: github_commit
+  point: 50
+  description: GitHubへのコミット
 
 two:
   user: two
-  type: 
-  point: 1
-  description: MyText
+  log_type: qiita_post
+  point: 100
+  description: Qiita記事投稿

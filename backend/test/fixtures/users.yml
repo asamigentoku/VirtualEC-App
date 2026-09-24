@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  clerk_user_id: MyString
-  email: MyString
-  point_balance: 1
+  clerk_user_id: user_fixture_one
+  email: fixture_one@example.com
+  point_balance: 500
 
 two:
-  clerk_user_id: MyString
-  email: MyString
-  point_balance: 1
+  clerk_user_id: user_fixture_two
+  email: fixture_two@example.com
+  point_balance: 300
