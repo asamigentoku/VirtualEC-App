@@ -10,6 +10,14 @@ class Purchase < ApplicationRecord
   belongs_to :product
   has_one :mail_log, dependent: :destroy
 
+  # after_commit を使う理由：
+  # after_create だと「トランザクションの途中」でコールバックが走ってしまい、
+  # 万が一この後の処理（例外）でロールバックされた場合にも
+  # 「購入完了」イベントを配信してしまう恐れがある。
+  # after_commit ならトランザクションが確定した後にだけ発火するため、
+  # 実際にDBへ確定した購入だけがKafkaへ流れることを保証できる。
+  after_commit :publish_purchase_completed_event, on: :create
+
   validates :point_used, presence: true,
                           numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   # DB側にも (user_id, product_id) のユニークインデックスがあるが、
@@ -67,5 +75,22 @@ class Purchase < ApplicationRecord
 
       purchase
     end
+  end
+
+  private
+
+  # 購入完了イベントをKafkaへpublishする。
+  # このイベントは bin/rails kafka:consume（Consumer側）が購読し、
+  # 「メールお届けログをsent状態に更新する」という非同期処理を後から行う。
+  def publish_purchase_completed_event
+    EventPublisher.publish(
+      "purchase.completed",
+      key: id,
+      purchase_id: id,
+      user_id: user_id,
+      product_id: product_id,
+      point_used: point_used,
+      occurred_at: created_at
+    )
   end
 end

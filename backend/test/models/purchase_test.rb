@@ -48,4 +48,22 @@ class PurchaseTest < ActiveSupport::TestCase
       Purchase.purchase!(user: user, product: product)
     end
   end
+
+  test "purchase! publishes a purchase.completed event after commit" do
+    user = users(:one)
+    product = products(:two)
+
+    # Kafkaの実サーバーが無くてもテストが決定的に通るよう、
+    # EventPublisher.publish だけをスタブに差し替えて呼び出し内容を検証する
+    published = nil
+    stub_singleton_method(EventPublisher, :publish, ->(topic, payload) { published = [ topic, payload ] }) do
+      Purchase.purchase!(user: user, product: product)
+    end
+
+    topic, payload = published
+    assert_equal "purchase.completed", topic
+    assert_equal user.id, payload[:user_id]
+    assert_equal product.id, payload[:product_id]
+    assert_equal product.point_price, payload[:point_used]
+  end
 end

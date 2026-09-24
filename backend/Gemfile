@@ -17,10 +17,20 @@ gem "jbuilder"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+# Use the database-backed adapters for Active Job and Action Cable
+# (Rails.cache 自体は Redis を使うため solid_cache は未使用)
 gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
+
+# Rails.cache のバックエンドとして Redis に接続するために使用
+gem "redis", "~> 5.0"
+
+# Kafka へのイベントpublish/consumeに使用（librdkafkaのRubyバインディング）
+gem "rdkafka", "~> 0.15"
+
+# 商品の全文検索(OpenSearch)への接続に使用
+gem "opensearch-ruby", "~> 3.0"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

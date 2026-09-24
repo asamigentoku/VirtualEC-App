@@ -28,4 +28,24 @@ class ProductTest < ActiveSupport::TestCase
     assert_includes Product.active, products(:one)
     assert_not_includes Product.active, products(:two)
   end
+
+  test "after_commit indexes the product into OpenSearch on create" do
+    indexed = nil
+    stub_singleton_method(OpensearchClient, :index_product, ->(product) { indexed = product }) do
+      Product.create!(title: "OpenSearch Indexing Test", point_price: 100)
+    end
+
+    assert_equal "OpenSearch Indexing Test", indexed&.title
+  end
+
+  test "after_commit removes the product from OpenSearch on destroy" do
+    product = Product.create!(title: "To be removed from OpenSearch", point_price: 100)
+
+    deleted_id = nil
+    stub_singleton_method(OpensearchClient, :delete_product, ->(id) { deleted_id = id }) do
+      product.destroy!
+    end
+
+    assert_equal product.id, deleted_id
+  end
 end

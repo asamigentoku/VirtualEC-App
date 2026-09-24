@@ -11,5 +11,16 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+
+    # Minitest 6 で Minitest::Mock（Object#stub）が削除されたための簡易代替。
+    # OpensearchClient/EventPublisher など、外部サービスに実際に接続するクラスメソッドを
+    # テスト中だけ差し替えたい場合に使う（ブロックを抜けたら必ず元のメソッドに戻す）。
+    def stub_singleton_method(object, method_name, implementation)
+      original = object.method(method_name)
+      object.define_singleton_method(method_name, &implementation)
+      yield
+    ensure
+      object.define_singleton_method(method_name, original)
+    end
   end
 end

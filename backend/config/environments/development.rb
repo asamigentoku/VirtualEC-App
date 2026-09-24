@@ -23,8 +23,12 @@ Rails.application.configure do
     config.action_controller.perform_caching = false
   end
 
-  # Change to :null_store to avoid any caching.
-  config.cache_store = :memory_store
+  # Rails.cache のバックエンドとして Redis を使用する（docker-compose の redis サービス）。
+  # namespace を付けておくと、同じRedisを他用途（Sidekiq等）と共有しても衝突しない。
+  config.cache_store = :redis_cache_store, {
+    url: ENV.fetch("REDIS_URL", "redis://localhost:6379/1"),
+    namespace: "virtualec_cache"
+  }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
